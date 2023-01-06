@@ -1,0 +1,9 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+MAKEFLAGS += --no-print-directory
+
+export PYBUILD_NAME = pyznap
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild --test-pytest

@@ -1,0 +1,22 @@
+Source: pyznap
+Section: misc
+Priority: optional
+Build-Depends: debhelper-compat (= 13), dh-python, python3-pytest
+Maintainer: dionysius <dragon.dionysius@gmail.com>
+Standards-Version: 4.6.1
+Vcs-Git: https://github.com/dionysius/pyznap-deb.git
+Vcs-Browser: https://github.com/dionysius/pyznap-deb
+Homepage: https://github.com/yboetz/pyznap
+Rules-Requires-Root: no
+
+Package: pyznap
+Architecture: all
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Built-Using: ${misc:Built-Using}
+Description: ZFS snapshot tool written in python
+ pyznap is a ZFS snapshot management tool. It automatically takes and deletes
+ snapshots and can send them to different backup locations. You can specify a
+ policy for a given filesystem in the config file.
+ .
+ This package contains the pyznap binary and systemd timer
