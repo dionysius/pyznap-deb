@@ -1,0 +1,9 @@
+[Unit]
+Description=Send ZFS snapshots
+Documentation=man:pyznap(1)
+Requires=local-fs.target network-online.target
+After=local-fs.target network-online.target pyznap.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/pyznap send

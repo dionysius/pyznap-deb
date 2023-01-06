@@ -1,0 +1,3 @@
+This package provides systemd timers that will run pyznap snap every 15 minutes
+and pyznap send every 2 hours. If you require a different interval, you will
+need to disable or override the timer.

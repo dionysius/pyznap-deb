@@ -1,7 +1,7 @@
 Source: pyznap
 Section: misc
 Priority: optional
-Build-Depends: debhelper-compat (= 13), dh-python, python3-pytest
+Build-Depends: debhelper-compat (= 13), dh-python, help2man, python3-all
 Maintainer: dionysius <dragon.dionysius@gmail.com>
 Standards-Version: 4.6.1
 Vcs-Git: https://github.com/dionysius/pyznap-deb.git
@@ -11,8 +11,8 @@ Rules-Requires-Root: no
 
 Package: pyznap
 Architecture: all
-Depends: ${misc:Depends},
-         ${shlibs:Depends}
+Depends: ${misc:Depends}, ${python3:Depends}, ${shlibs:Depends}
+Recommends: lzop, mbuffer, pv
 Built-Using: ${misc:Built-Using}
 Description: ZFS snapshot tool written in python
  pyznap is a ZFS snapshot management tool. It automatically takes and deletes

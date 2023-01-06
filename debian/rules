@@ -3,7 +3,23 @@
 export DH_VERBOSE = 1
 MAKEFLAGS += --no-print-directory
 
-export PYBUILD_NAME = pyznap
+#export PYBUILD_NAME = pyznap
 
 %:
-	dh $@ --with python3 --buildsystem=pybuild --test-pytest
+	dh $@ --with python3 --buildsystem=pybuild
+
+# Requires root and other special cases (ssh predefined keys), ignore tests for now
+override_dh_auto_test:
+	@:
+
+override_dh_auto_install:
+	mkdir -p debian/tmp/etc/pyznap
+	python3 -m pyznap.main setup -p debian/tmp/etc/pyznap
+
+	dh_auto_install
+
+override_dh_installman:
+	mkdir -p debian/tmp/man
+	help2man debian/pyznap/usr/bin/pyznap -n "ZFS snapshot management tool" --no-info --no-discard-stderr > debian/tmp/man/pyznap.1
+	ls -1 -d debian/tmp/man/* > "debian/pyznap.manpages"
+	dh_installman

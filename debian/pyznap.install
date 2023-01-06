@@ -1,0 +1,2 @@
+etc/*
+debian/pyznap-send.* /lib/systemd/system
