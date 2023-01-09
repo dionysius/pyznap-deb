@@ -1,9 +1,8 @@
-pyznap (1.6.0-0alpha2) unstable; urgency=medium
+pyznap (1.6.0-0alpha3) unstable; urgency=medium
 
-  [ dionysius ]
   * update debian files
 
- -- Denis Manente <denis.manente@automatic-server.com>  Mon, 09 Jan 2023 14:38:36 +0100
+ -- dionysius <dragon.dionysius@gmail.com>  Mon, 09 Jan 2023 14:57:56 +0100
 
 pyznap (1.6.0-0alpha1) unstable; urgency=medium
 
