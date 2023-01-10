@@ -1,3 +1,12 @@
+pyznap (1.6.0-0alpha4) unstable; urgency=medium
+
+  [ dionysius ]
+  * typo timers plural
+  * provide ref to man for changing unit behavior
+  * fix wrong calendar timer
+
+ -- Denis Manente <denis.manente@automatic-server.com>  Tue, 10 Jan 2023 11:12:45 +0100
+
 pyznap (1.6.0-0alpha3) unstable; urgency=medium
 
   * update debian files
