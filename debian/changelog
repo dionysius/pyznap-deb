@@ -1,11 +1,16 @@
+pyznap (1.6.0-0alpha5) unstable; urgency=medium
+
+  * due to different timers pyznap-send service should not mention pyznap service
+
+ -- dionysius <dragon.dionysius@gmail.com>  Tue, 10 Jan 2023 12:35:26 +0100
+
 pyznap (1.6.0-0alpha4) unstable; urgency=medium
 
-  [ dionysius ]
   * typo timers plural
   * provide ref to man for changing unit behavior
   * fix wrong calendar timer
 
- -- Denis Manente <denis.manente@automatic-server.com>  Tue, 10 Jan 2023 11:12:45 +0100
+ -- dionysius <dragon.dionysius@gmail.com>  Tue, 10 Jan 2023 11:12:45 +0100
 
 pyznap (1.6.0-0alpha3) unstable; urgency=medium
 
