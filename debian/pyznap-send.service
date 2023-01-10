@@ -2,7 +2,7 @@
 Description=Send ZFS snapshots
 Documentation=man:pyznap(1)
 Requires=local-fs.target network-online.target
-After=local-fs.target network-online.target pyznap.service
+After=local-fs.target network-online.target
 
 [Service]
 Type=oneshot
