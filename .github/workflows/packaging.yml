@@ -92,9 +92,9 @@ jobs:
           arch: ${{ matrix.arch }}
           distro: ${{ matrix.distro }}
           githubToken: ${{ github.token }}
-          env: |
-            DEBFULLNAME: x${{ env.DEBFULLNAME }}
-            DEBEMAIL: x${{ env.DEBEMAIL }}
+          # env: |
+          #   DEBFULLNAME: x${{ env.DEBFULLNAME }}
+          #   DEBEMAIL: x${{ env.DEBEMAIL }}
           dockerRunArgs: |
             --volume "${PWD}:/work"
           install: |
