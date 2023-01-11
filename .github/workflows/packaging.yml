@@ -96,7 +96,7 @@ jobs:
             DEBFULLNAME: ${{ env.DEBFULLNAME }}
             DEBEMAIL: ${{ env.DEBEMAIL }}
           dockerRunArgs: |
-            --volume "${{ github.workspace }}:/work"
+            --volume "${PWD}:/work"
           install: |
             ls -lah .
             ls -lah /work
