@@ -48,6 +48,7 @@ jobs:
 
           pushd source
 
+          ls -lah .
           # https://github.com/actions/checkout/issues/363
           git config --global --add safe.directory $(realpath .)
 
@@ -126,8 +127,8 @@ jobs:
             rm -f *.deb *.buildinfo *.changes
 
             pushd source
-            ls -lah .
 
+            ls -lah .
             # https://github.com/actions/checkout/issues/363
             git config --global --add safe.directory $(realpath .)
 
