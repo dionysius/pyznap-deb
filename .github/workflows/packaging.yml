@@ -35,11 +35,11 @@ jobs:
           path: source
       - name: build deb
         run: |
-          echo 'Acquire::Retries "3";' | sudo tee /etc/apt/apt.conf.d/99ci
-          sudo apt-get update
-          sudo apt-get install -y debhelper-compat git-buildpackage equivs
+          echo 'Acquire::Retries "3";' | tee /etc/apt/apt.conf.d/99ci
+          apt-get update
+          apt-get install -y debhelper-compat git-buildpackage equivs
 
-          sudo mk-build-deps -i -r source/debian/control -t "apt-get -y -o Debug::pkgProblemResolver=yes --no-install-recommends --yes"
+          mk-build-deps -i -r source/debian/control -t "apt-get -y -o Debug::pkgProblemResolver=yes --no-install-recommends --yes"
           rm -f *.deb *.buildinfo *.changes
 
           pushd source
@@ -107,7 +107,7 @@ jobs:
           dockerRunArgs: |
             --volume "${PWD}:/work"
           install: |
-            echo 'Acquire::Retries "3";' | sudo tee /etc/apt/apt.conf.d/99ci
+            echo 'Acquire::Retries "3";' | tee /etc/apt/apt.conf.d/99ci
             apt-get update
             apt-get install -y debhelper-compat git-buildpackage equivs
           run: |
