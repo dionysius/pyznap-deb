@@ -30,6 +30,8 @@ jobs:
 
     container:
       image: ${{ matrix.container }}
+      env:
+        DEBIAN_FRONTEND: noninteractive
 
     steps:
       # because job is in container
