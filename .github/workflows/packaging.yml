@@ -92,20 +92,19 @@ jobs:
           arch: ${{ matrix.arch }}
           distro: ${{ matrix.distro }}
           githubToken: ${{ github.token }}
-          # env: |
-          #   DEBFULLNAME: x${{ env.DEBFULLNAME }}
-          #   DEBEMAIL: x${{ env.DEBEMAIL }}
+          env: |
+            DEBFULLNAME: ${{ env.DEBFULLNAME }}
+            DEBEMAIL: ${{ env.DEBEMAIL }}
           dockerRunArgs: |
             --volume "${PWD}:/work"
           install: |
-            ls -lah .
-            ls -lah /work
             apt-get update
             apt-get install -y debhelper-compat git-buildpackage equivs
-            mk-build-deps -i -r /work/source/debian/control -t "apt-get -y -o Debug::pkgProblemResolver=yes --no-install-recommends --yes"
-            rm -f *.deb *.buildinfo *.changes
           run: |
             pushd /work/source
+
+            mk-build-deps -i -r debian/control -t "apt-get -y -o Debug::pkgProblemResolver=yes --no-install-recommends --yes"
+            rm -f *.deb *.buildinfo *.changes
 
             git config user.name "${DEBFULLNAME}"
             git config user.email "${DEBEMAIL}"
