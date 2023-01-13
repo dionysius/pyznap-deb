@@ -44,6 +44,7 @@ jobs:
           # https://github.com/actions/checkout/issues/126
           apt-get update
           apt-get install -y lsb-release
+          echo "foo"
           DISTCODENAME=$(lsb_release -c -s)
           grep -qE "^deb.*$DISTCODENAME-backports main" /etc/apt/sources.list || grep -E "^deb.*$DISTCODENAME main" /etc/apt/sources.list | sed "s/$DISTCODENAME main/$DISTCODENAME-backports main/" | tee -a /etc/apt/sources.list
           apt-get update
@@ -131,6 +132,9 @@ jobs:
           arch: ${{ matrix.arch }}
           distro: ${{ matrix.distro }}
           githubToken: ${{ github.token }}
+          env: |
+            DEBFULLNAME: ${{ env.DEBFULLNAME }}
+            DEBEMAIL: ${{ env.DEBEMAIL }}
           dockerRunArgs: |
             --volume "${PWD}:/work"
           install: |
