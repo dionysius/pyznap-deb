@@ -11,8 +11,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  DEBFULLNAME: Github Actions
-  DEBEMAIL: "github-actions@example.com"
+  DEBFULLNAME: dionysius (github actions)
+  DEBEMAIL: "dragon.dionysius+gha@gmail.com"
 
 jobs:
 
@@ -33,27 +33,38 @@ jobs:
         with:
           fetch-depth: 0
           path: source
-      - name: build deb
+      - name: install
         # https://github.com/actions/runner/issues/1533
         shell: bash
         run: |
           # https://github.com/actions/runner-images/issues/675
           echo 'Acquire::Retries "3";' | tee /etc/apt/apt.conf.d/99ci
 
+          # add backports where missing and install latest git
+          # https://github.com/actions/checkout/issues/126
           apt-get update
-          apt-get install -y debhelper-compat git-buildpackage equivs
+          apt-get install -y lsb-release
+          DISTCODENAME=$(lsb_release -c -s)
+          grep -qE "^deb.*$DISTCODENAME-backports main" /etc/apt/sources.list || grep -E "^deb.*$DISTCODENAME main" /etc/apt/sources.list | sed "s/$DISTCODENAME main/$DISTCODENAME-backports main/" | tee -a /etc/apt/sources.list
+          apt-get update
+          apt-get -t $DISTCODENAME-backports install -y git
 
+          git config -g user.name "${DEBFULLNAME}"
+          git config -g user.email "${DEBEMAIL}"
+
+          apt-get install -y debhelper-compat git-buildpackage equivs
+      - name: build deb
+        # https://github.com/actions/runner/issues/1533
+        shell: bash
+        run: |
+          # install build depends and remove resulting clutter
           mk-build-deps -i -r source/debian/control -t "apt-get -y -o Debug::pkgProblemResolver=yes --no-install-recommends --yes"
           rm -f *.deb *.buildinfo *.changes
 
           pushd source
 
           ls -lah .
-          # https://github.com/actions/checkout/issues/363
-          git config --global --add safe.directory $(realpath .)
 
-          git config user.name "${DEBFULLNAME}"
-          git config user.email "${DEBEMAIL}"
           DISTCODENAME=$(lsb_release -c -s)
           PARENTVERSION=$(dpkg-parsechangelog --show-field Version)
           dch -b -D "${DISTCODENAME}" -v "${PARENTVERSION}~${DISTCODENAME}" "Release for ${DISTCODENAME}"
@@ -118,22 +129,30 @@ jobs:
             # https://github.com/actions/runner-images/issues/675
             echo 'Acquire::Retries "3";' | tee /etc/apt/apt.conf.d/99ci
 
+            # add backports where missing and install latest git
+            # https://github.com/actions/checkout/issues/126
             apt-get update
+            apt-get install -y lsb-release
+            DISTCODENAME=$(lsb_release -c -s)
+            grep -qE "^deb.*$DISTCODENAME-backports main" /etc/apt/sources.list || grep -E "^deb.*$DISTCODENAME main" /etc/apt/sources.list | sed "s/$DISTCODENAME main/$DISTCODENAME-backports main/" | tee -a /etc/apt/sources.list
+            apt-get update
+            apt-get -t $DISTCODENAME-backports install -y git
+
+            git config -g user.name "${DEBFULLNAME}"
+            git config -g user.email "${DEBEMAIL}"
+
             apt-get install -y debhelper-compat git-buildpackage equivs
           run: |
             pushd /work
 
+            # install build depends and remove resulting clutter
             mk-build-deps -i -r source/debian/control -t "apt-get -y -o Debug::pkgProblemResolver=yes --no-install-recommends --yes"
             rm -f *.deb *.buildinfo *.changes
 
             pushd source
 
             ls -lah .
-            # https://github.com/actions/checkout/issues/363
-            git config --global --add safe.directory $(realpath .)
 
-            git config user.name "${DEBFULLNAME}"
-            git config user.email "${DEBEMAIL}"
             DISTCODENAME=$(lsb_release -c -s)
             PARENTVERSION=$(dpkg-parsechangelog --show-field Version)
             dch -b -D "${DISTCODENAME}" -v "${PARENTVERSION}~${DISTCODENAME}" "Release for ${DISTCODENAME}"
