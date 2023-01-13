@@ -49,8 +49,8 @@ jobs:
           apt-get update
           apt-get -t $DISTCODENAME-backports install -y git
 
-          git config -g user.name "${DEBFULLNAME}"
-          git config -g user.email "${DEBEMAIL}"
+          git config --global user.name "${DEBFULLNAME}"
+          git config --global user.email "${DEBEMAIL}"
 
           apt-get install -y debhelper-compat git-buildpackage equivs
       - name: build deb
@@ -138,8 +138,8 @@ jobs:
             apt-get update
             apt-get -t $DISTCODENAME-backports install -y git
 
-            git config -g user.name "${DEBFULLNAME}"
-            git config -g user.email "${DEBEMAIL}"
+            git config --global user.name "${DEBFULLNAME}"
+            git config --global user.email "${DEBEMAIL}"
 
             apt-get install -y debhelper-compat git-buildpackage equivs
           run: |
