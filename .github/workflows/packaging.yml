@@ -34,9 +34,14 @@ jobs:
           fetch-depth: 0
           path: source
       - name: build deb
+        # https://github.com/actions/runner/issues/1533
         shell: bash
         run: |
+          # https://github.com/actions/runner-images/issues/675
           echo 'Acquire::Retries "3";' | tee /etc/apt/apt.conf.d/99ci
+          # https://github.com/actions/checkout/issues/363
+          git config --global --add safe.directory $(realpath .)
+
           apt-get update
           apt-get install -y debhelper-compat git-buildpackage equivs
 
@@ -108,7 +113,11 @@ jobs:
           dockerRunArgs: |
             --volume "${PWD}:/work"
           install: |
+            # https://github.com/actions/runner-images/issues/675
             echo 'Acquire::Retries "3";' | tee /etc/apt/apt.conf.d/99ci
+            # https://github.com/actions/checkout/issues/363
+            git config --global --add safe.directory $(realpath .)
+
             apt-get update
             apt-get install -y debhelper-compat git-buildpackage equivs
           run: |
