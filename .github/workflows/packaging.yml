@@ -28,12 +28,7 @@ jobs:
       image: ${{ matrix.distro }}
 
     steps:
-      - name: check out
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          path: source
-      - name: install
+      - name: latest git from backports
         # https://github.com/actions/runner/issues/1533
         shell: bash
         run: |
@@ -48,7 +43,15 @@ jobs:
           grep -qE "^deb.*$DISTCODENAME-backports main" /etc/apt/sources.list || grep -E "^deb.*$DISTCODENAME main" /etc/apt/sources.list | sed "s/$DISTCODENAME main/$DISTCODENAME-backports main/" | tee -a /etc/apt/sources.list
           apt-get update
           apt-get -t $DISTCODENAME-backports install -y git
-
+      - name: check out
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          path: source
+      - name: install
+        # https://github.com/actions/runner/issues/1533
+        shell: bash
+        run: |
           git config --global user.name "${DEBFULLNAME}"
           git config --global user.email "${DEBEMAIL}"
 
@@ -109,6 +112,21 @@ jobs:
           #   distro: bullseye
 
     steps:
+      - name: latest git from backports
+        # https://github.com/actions/runner/issues/1533
+        shell: bash
+        run: |
+          # https://github.com/actions/runner-images/issues/675
+          echo 'Acquire::Retries "3";' | tee /etc/apt/apt.conf.d/99ci
+
+          # add backports where missing and install latest git
+          # https://github.com/actions/checkout/issues/126
+          apt-get update
+          apt-get install -y lsb-release
+          DISTCODENAME=$(lsb_release -c -s)
+          grep -qE "^deb.*$DISTCODENAME-backports main" /etc/apt/sources.list || grep -E "^deb.*$DISTCODENAME main" /etc/apt/sources.list | sed "s/$DISTCODENAME main/$DISTCODENAME-backports main/" | tee -a /etc/apt/sources.list
+          apt-get update
+          apt-get -t $DISTCODENAME-backports install -y git
       - name: check out
         uses: actions/checkout@v3
         with:
