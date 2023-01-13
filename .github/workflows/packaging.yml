@@ -10,10 +10,6 @@ concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  DEBFULLNAME: dionysius (github actions)
-  DEBEMAIL: "dragon.dionysius+gha@gmail.com"
-
 jobs:
 
   build-native:
