@@ -39,8 +39,6 @@ jobs:
         run: |
           # https://github.com/actions/runner-images/issues/675
           echo 'Acquire::Retries "3";' | tee /etc/apt/apt.conf.d/99ci
-          # https://github.com/actions/checkout/issues/363
-          git config --global --add safe.directory $(realpath .)
 
           apt-get update
           apt-get install -y debhelper-compat git-buildpackage equivs
@@ -49,6 +47,9 @@ jobs:
           rm -f *.deb *.buildinfo *.changes
 
           pushd source
+
+          # https://github.com/actions/checkout/issues/363
+          git config --global --add safe.directory $(realpath .)
 
           git config user.name "${DEBFULLNAME}"
           git config user.email "${DEBEMAIL}"
@@ -115,8 +116,6 @@ jobs:
           install: |
             # https://github.com/actions/runner-images/issues/675
             echo 'Acquire::Retries "3";' | tee /etc/apt/apt.conf.d/99ci
-            # https://github.com/actions/checkout/issues/363
-            git config --global --add safe.directory $(realpath .)
 
             apt-get update
             apt-get install -y debhelper-compat git-buildpackage equivs
@@ -128,6 +127,9 @@ jobs:
 
             pushd source
             ls -lah .
+
+            # https://github.com/actions/checkout/issues/363
+            git config --global --add safe.directory $(realpath .)
 
             git config user.name "${DEBFULLNAME}"
             git config user.email "${DEBEMAIL}"
