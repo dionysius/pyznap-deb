@@ -47,6 +47,7 @@ jobs:
           echo "foo"
           DISTCODENAME=$(lsb_release -c -s)
           echo "bar"
+          cat /etc/apt/sources.list
           grep -qE "^deb.*$DISTCODENAME-backports main" /etc/apt/sources.list || grep -E "^deb.*$DISTCODENAME main" /etc/apt/sources.list | sed "s/$DISTCODENAME main/$DISTCODENAME-backports main/" | tee -a /etc/apt/sources.list
           apt-get update
           apt-get -t $DISTCODENAME-backports install -y git
@@ -158,6 +159,7 @@ jobs:
           run: |
             git config --global user.name "${DEBFULLNAME}"
             git config --global user.email "${DEBEMAIL}"
+            git config --global --add safe.directory /work/source
 
             pushd /work
 
