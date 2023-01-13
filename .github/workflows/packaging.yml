@@ -101,10 +101,13 @@ jobs:
             apt-get update
             apt-get install -y debhelper-compat git-buildpackage equivs
           run: |
-            pushd /work/source
+            pushd /work
 
-            mk-build-deps -i -r debian/control -t "apt-get -y -o Debug::pkgProblemResolver=yes --no-install-recommends --yes"
+            mk-build-deps -i -r source/debian/control -t "apt-get -y -o Debug::pkgProblemResolver=yes --no-install-recommends --yes"
             rm -f *.deb *.buildinfo *.changes
+
+            pushd source
+            ls -lah .
 
             git config user.name "${DEBFULLNAME}"
             git config user.email "${DEBEMAIL}"
@@ -116,6 +119,7 @@ jobs:
 
             gbp buildpackage -B -us -uc --git-export-dir=.. --git-ignore-branch
 
+            popd
             popd
       - name: upload artifacts
         uses: actions/upload-artifact@v3
