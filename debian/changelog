@@ -1,3 +1,11 @@
+pyznap (1.6.0-1) unstable; urgency=medium
+
+  * setuptools is also required
+  * use reusable workflow with package signing
+  * build only native, since packages are arch independent
+
+ -- dionysius <dragon.dionysius@gmail.com>  Fri, 13 Jan 2023 22:27:20 +0100
+
 pyznap (1.6.0-0alpha5) unstable; urgency=medium
 
   * due to different timers pyznap-send service should not mention pyznap service
