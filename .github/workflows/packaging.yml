@@ -18,9 +18,9 @@ jobs:
 
   build-native:
     uses: dionysius/gbp-gha/.github/workflows/gbp-native.yml@main
-  build-qemu:
-    uses: dionysius/gbp-gha/.github/workflows/gbp-qemu.yml@main
+  # build-qemu:
+  #   uses: dionysius/gbp-gha/.github/workflows/gbp-qemu.yml@main
   release:
-    if: startsWith(github.event.ref, 'refs/tags/debian')
-    needs: [build-native, build-qemu]
+    if: startsWith(github.event.ref, 'refs/tags/debian') || startsWith(github.event.ref, 'refs/tags/test')
+    needs: [build-native]
     uses: dionysius/gbp-gha/.github/workflows/release.yml@main
