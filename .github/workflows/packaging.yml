@@ -17,8 +17,8 @@ env:
 jobs:
 
   build-native:
-    uses: dionysius/gbp-gha/gbp-native.yml@main
+    uses: dionysius/gbp-gha/.github/workflows/gbp-native.yml@main
   build-qemu:
-    uses: dionysius/gbp-gha/gbp-qemu.yml@main
+    uses: dionysius/gbp-gha/.github/workflows/gbp-qemu.yml@main
   release:
-    uses: dionysius/gbp-gha/release.yml@main
+    uses: dionysius/gbp-gha/.github/workflows/release.yml@main
