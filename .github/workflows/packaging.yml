@@ -34,6 +34,7 @@ jobs:
           fetch-depth: 0
           path: source
       - name: build deb
+        shell: bash
         run: |
           echo 'Acquire::Retries "3";' | tee /etc/apt/apt.conf.d/99ci
           apt-get update
