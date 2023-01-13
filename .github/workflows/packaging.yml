@@ -22,10 +22,14 @@ jobs:
 
     strategy:
       matrix:
-        distro: ["ubuntu:latest", "debian:latest"]
+        include:
+          - container: "ubuntu:latest"
+            distro: "ubuntu_latest"
+          - container: "debian:stable"
+            distro: "debian_stable"
 
     container:
-      image: ${{ matrix.distro }}
+      image: ${{ matrix.container }}
 
     steps:
       # because job is in container
@@ -98,6 +102,9 @@ jobs:
 
     strategy:
       matrix:
+        # TODO: use better distro names once available
+        # https://github.com/uraimo/run-on-arch-action/issues/106
+        # https://github.com/uraimo/run-on-arch-action/pull/58
         include:
           - arch: armv7
             distro: ubuntu_latest
@@ -124,9 +131,6 @@ jobs:
           arch: ${{ matrix.arch }}
           distro: ${{ matrix.distro }}
           githubToken: ${{ github.token }}
-          env: |
-            DEBFULLNAME: ${{ env.DEBFULLNAME }}
-            DEBEMAIL: ${{ env.DEBEMAIL }}
           dockerRunArgs: |
             --volume "${PWD}:/work"
           install: |
