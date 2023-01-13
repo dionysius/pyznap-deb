@@ -6,6 +6,10 @@ on:
       - 'debian/*.*.*-*'
       - 'test/*'
 
+env:
+  DEBFULLNAME: dionysius (github-actions)
+  DEBEMAIL: "dragon.dionysius+gha@gmail.com"
+
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
@@ -14,8 +18,18 @@ jobs:
 
   build-native:
     uses: dionysius/gbp-gha/.github/workflows/gbp-native.yml@main
+    with:
+      DEBFULLNAME: ${{ env.DEBFULLNAME }}
+      DEBEMAIL: ${{ env.DEBEMAIL }}
+    secrets:
+      GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
   # build-qemu:
   #   uses: dionysius/gbp-gha/.github/workflows/gbp-qemu.yml@main
+  #   with:
+  #     DEBFULLNAME: ${{ env.DEBFULLNAME }}
+  #     DEBEMAIL: ${{ env.DEBEMAIL }}
+  #   secrets:
+  #     GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
   release:
     if: startsWith(github.event.ref, 'refs/tags/debian') || startsWith(github.event.ref, 'refs/tags/test')
     needs: [build-native]
