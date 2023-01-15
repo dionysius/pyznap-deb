@@ -15,7 +15,7 @@ Prebuild deb packages are available in the [releases section](https://github.com
 ## Packaging
 
 - Clone with git-buildpackage: `gbp clone https://github.com/dionysius/pyznap-deb.git`
-- Switch to the folder: `cd vaultwarden-deb`
+- Switch to the folder: `cd pyznap-deb`
 - Build with git-buildpackage: `gbp buildpackage`
   - There are many arguments to fine-tune the build (see `gbp buildpackage --help` and `dpkg-buildpackage --help`)
   - Notable options: `-b` (binary-only, no source files), `-us` (unsigned source package), `-uc` (unsigned .buildinfo and .changes file), `--git-export-dir=<somedir>` (before building the package export the source there)
